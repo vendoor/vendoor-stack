@@ -1,6 +1,6 @@
 [certificatesResolvers.le.acme]
   email = "lajoskvcs@icloud.com"
-  storage = "acme.json"
+  storage = "/acme.json"
   [certificatesResolvers.le.acme.dnsChallenge]
     provider = "digitalocean"
     delayBeforeCheck = 0
