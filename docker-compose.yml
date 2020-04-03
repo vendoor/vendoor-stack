@@ -13,6 +13,7 @@ services:
       - ./config/traefik.toml:/traefik.toml
       - ./config/dyn.toml:/dyn.toml
       - ./tls/acme.json:/acme.json
+      - ./auth/usersFile:/usersFile
     ports:
       - "80:80"
       - "443:443"
@@ -24,6 +25,7 @@ services:
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.tls=true"
       - "traefik.http.routers.traefik.tls.certresolver=le"
+      - "traefik.http.routers.traefik.middlewares=traefikAuth"
 
   landing:
     image: docker.pkg.github.com/vendoor/vendoor-landing/vendoor-landing:production-latest

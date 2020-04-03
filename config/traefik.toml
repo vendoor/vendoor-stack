@@ -9,6 +9,10 @@
     address = ":443"
     [entryPoints.https.http.tls]
 
+[http.middlewares]
+  [http.middlewares.traefikAuth.basicAuth]
+    usersFile = "/usersFile"
+
 [api]
   dashboard = true
 
