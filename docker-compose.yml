@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik:v2.2
+    container_name: traefik
+    hostname: traefik
+    restart: always
+    env_file:
+      - traefik.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/traefik.toml:/traefik.toml
+      - ./config/dyn.toml:/dyn.toml
+      - ./tls/vendoor.me.cert:/vendoor.me.cert
+      - ./tls/vendoor.me.key:/vendoor.me.key
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.traefik.rule=Host(`traefik.vendoor.me`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.blog.tls.certresolver=le"
+
+  landing:
+    image: docker.pkg.github.com/vendoor/vendoor-landing/vendoor-landing:production-latest
+    hostname: landing
+    container_name: landing
+    restart: always
+    ports:
+      - "80"
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.landing.rule=HOST(`vendoor.me`) && PathPrefix(`/`)"
+      - "traefik.http.routers.landing.tls=true"
+      - "traefik.http.routers.blog.tls.certresolver=le"
+
+networks:
+  web:
+    external: true

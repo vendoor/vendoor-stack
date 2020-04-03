@@ -1,0 +1,18 @@
+[log]
+  level = "ERROR"
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+
+  [entryPoints.https]
+    address = ":443"
+    [entryPoints.https.http.tls]
+
+[api]
+  dashboard = true
+
+[providers]
+  [providers.docker]
+  [providers.file]
+    filename = "/dyn.toml"
