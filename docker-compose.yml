@@ -26,6 +26,11 @@ services:
       - "traefik.http.routers.traefik.tls=true"
       - "traefik.http.routers.traefik.tls.certresolver=le"
       - "traefik.http.middlewares.traefikAuth.basicauth.usersfile=/usersFile"
+      - "traefik.http.routers.traefik.middlewares=traefikAuth@docker"
+      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:[a-z-.]+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=http"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   landing:
     image: docker.pkg.github.com/vendoor/vendoor-landing/vendoor-landing:production-latest
@@ -40,6 +45,7 @@ services:
       - "traefik.http.routers.landing.rule=HOST(`vendoor.me`) && PathPrefix(`/`)"
       - "traefik.http.routers.landing.tls=true"
       - "traefik.http.routers.landing.tls.certresolver=le"
+      - "traefik.http.routers.landing.entrypoints=https"
 
   client:
     image: docker.pkg.github.com/vendoor/vendoor-client/vendoor-client:production-latest
@@ -54,6 +60,7 @@ services:
       - "traefik.http.routers.landing.rule=HOST(`app.vendoor.me`) && PathPrefix(`/`)"
       - "traefik.http.routers.landing.tls=true"
       - "traefik.http.routers.landing.tls.certresolver=le"
+      - "traefik.http.routers.landing.entrypoints=https"
 
 networks:
   web:
