@@ -57,10 +57,10 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.landing.rule=HOST(`app.vendoor.me`) && PathPrefix(`/`)"
-      - "traefik.http.routers.landing.tls=true"
-      - "traefik.http.routers.landing.tls.certresolver=le"
-      - "traefik.http.routers.landing.entrypoints=https"
+      - "traefik.http.routers.client.rule=HOST(`app.vendoor.me`) && PathPrefix(`/`)"
+      - "traefik.http.routers.client.tls=true"
+      - "traefik.http.routers.client.tls.certresolver=le"
+      - "traefik.http.routers.client.entrypoints=https"
 
 networks:
   web:
