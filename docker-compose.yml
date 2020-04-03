@@ -12,8 +12,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config/traefik.toml:/traefik.toml
       - ./config/dyn.toml:/dyn.toml
-      - ./tls/vendoor.me.cert:/vendoor.me.cert
-      - ./tls/vendoor.me.key:/vendoor.me.key
+      - ./tls/acme.json:/acme.json
     ports:
       - "80:80"
       - "443:443"
