@@ -41,6 +41,20 @@ services:
       - "traefik.http.routers.landing.tls=true"
       - "traefik.http.routers.landing.tls.certresolver=le"
 
+  client:
+    image: docker.pkg.github.com/vendoor/vendoor-client/vendoor-client:production-latest
+    hostname: client
+    container_name: client
+    restart: always
+    ports:
+      - "80"
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.landing.rule=HOST(`app.vendoor.me`) && PathPrefix(`/`)"
+      - "traefik.http.routers.landing.tls=true"
+      - "traefik.http.routers.landing.tls.certresolver=le"
+
 networks:
   web:
     external: true
