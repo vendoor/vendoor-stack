@@ -74,7 +74,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.client.rule=HOST(`app.vendoor.me`) && PathPrefix(`/`)"
+      - "traefik.http.routers.client.rule=HOST(`app.vendoor.me`) && PathPrefix(`/api`)"
       - "traefik.http.routers.client.tls=true"
       - "traefik.http.routers.client.tls.certresolver=le"
       - "traefik.http.routers.client.entrypoints=https"
